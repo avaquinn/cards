@@ -18,24 +18,16 @@ public class Game {
 
         System.out.println(playedStack);
 
-        for (int i = 0; i < 10; i++) {
-
-            Card cardDrew = deck.draw();
+        Card cardDrew = deck.draw();
+        do{
             System.out.println(checkCard(playedStack, cardDrew));
             System.out.println(".........");
             playedStack.addLast(cardDrew);
-
             if(cardTier(cardDrew) == 10) playedStack.clear();
-
-        }
+            cardDrew = deck.draw();
+        } while (cardDrew != null);
 
         System.out.println(playedStack);
-
-
-
-
-
-
 
     }
 
