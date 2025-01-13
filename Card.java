@@ -7,6 +7,10 @@ public class Card {
         this.rank = rank;
     }
 
+    public String getCardRank() {
+        return rank;
+    }
+
     @Override
     public String toString() {
         return rank + " of " + suit;

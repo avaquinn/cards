@@ -15,7 +15,6 @@ public class Deck {
                 cards.add(new Card(suit, rank));
             }
         }
-
     }
     public void shuffle() {
         Collections.shuffle(cards);
