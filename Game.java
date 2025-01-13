@@ -3,14 +3,8 @@ import java.util.ArrayList;
 public class Game {
     public static void main(String[] args)
     {
-        Display.runDisplay();
-
-        System.out.println("foo");
-
-
-
+        //Display.runDisplay();
         initializeGame();
-
 
     }
     public static void initializeGame()
@@ -25,11 +19,21 @@ public class Game {
         System.out.println(playedStack);
 
         for (int i = 0; i < 10; i++) {
-            playedStack.addLast(deck.draw());
-            System.out.println(checkCard(playedStack, deck.draw()));
+
+            Card cardDrew = deck.draw();
+            System.out.println(checkCard(playedStack, cardDrew));
             System.out.println(".........");
+            playedStack.addLast(cardDrew);
+
+            if(cardTier(cardDrew) == 10) playedStack.clear();
 
         }
+
+        System.out.println(playedStack);
+
+
+
+
 
 
 
@@ -48,11 +52,13 @@ public class Game {
 
     public static boolean checkCard(ArrayList<Card> Pile, Card playedCard)
     {
+        System.out.print("Drew card: " + playedCard);
+        System.out.println("    Rank: " + cardTier(playedCard));
+        if (Pile.isEmpty()) return true;
+
         Card topOfPile = Pile.removeLast();
         System.out.print("Pile card: " + topOfPile);
         System.out.println("    Rank: " + cardTier(topOfPile));
-        System.out.print("Drew card: " + playedCard);
-        System.out.println("    Rank: " + cardTier(playedCard));
 
         int pileTier = cardTier(topOfPile);
         int playedTier = cardTier(playedCard);
