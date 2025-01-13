@@ -1,19 +1,36 @@
+import java.util.ArrayList;
+
 public class Game {
     public static void main(String[] args)
     {
         Display.runDisplay();
 
         System.out.println("foo");
+
+
+
+        initializeGame();
+
+
+    }
+    public static void initializeGame()
+    {
+        System.out.println("Hiii");
         Deck deck = new Deck();
         deck.shuffle();
 
-        for (int i = 0; i < 5; i++) {
-            Card card = deck.draw();
-            // System.out.println("Drew card: " + card);
+        ArrayList<Card> playedStack = new ArrayList<>(52);
+        playedStack.addLast(deck.draw());
+
+        System.out.println(playedStack);
+
+        for (int i = 0; i < 10; i++) {
+            playedStack.addLast(deck.draw());
+            System.out.println(checkCard(playedStack, deck.draw()));
+            System.out.println(".........");
+
         }
 
-
-        System.out.println(checkCard(deck.draw(), deck.draw(), deck.draw()));
 
 
     }
@@ -29,12 +46,13 @@ public class Game {
         return 0;
     }
 
-    public static boolean checkCard(Card priorTop, Card topOfPile, Card playedCard)
+    public static boolean checkCard(ArrayList<Card> Pile, Card playedCard)
     {
-        System.out.println("Drew card: " + topOfPile);
-        System.out.println("Rank: " + cardTier(topOfPile));
-        System.out.println("Drew card: " + playedCard);
-        System.out.println("Rank: " + cardTier(playedCard));
+        Card topOfPile = Pile.removeLast();
+        System.out.print("Pile card: " + topOfPile);
+        System.out.println("    Rank: " + cardTier(topOfPile));
+        System.out.print("Drew card: " + playedCard);
+        System.out.println("    Rank: " + cardTier(playedCard));
 
         int pileTier = cardTier(topOfPile);
         int playedTier = cardTier(playedCard);
@@ -43,13 +61,14 @@ public class Game {
         // REFACTOR THIS AS A STACK
         if(pileTier == 3)
         {
-            pileTier = cardTier(priorTop);
+            // pileTier = cardTier(topOfPile);
+            return true;
         }
         // Cards played on a 7 must be 7 or lower
-        if (pileTier == 1 && playedTier <= 7) return true;
-
-        //else if ()
-
+        else if (pileTier == 7 && playedTier <= 7) return true;
+        else if (playedTier == 2) return true; //RESET CUE HERE
+        else if (playedTier == 1) return true; //RESET CUE HERE
+        else if (playedTier >= pileTier) return true;
 
         return false;
     }
