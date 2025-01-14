@@ -20,4 +20,9 @@ public class Player {
         System.out.println("Player Top Cards: "+ playerTopCards);
         System.out.println("Player [[HIDDEN]] Cards: "+ playerHiddenCards);
     }
+
+    public ArrayList<Card> printHand()
+    {
+        return playerHand;
+    }
 }

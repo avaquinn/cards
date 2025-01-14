@@ -17,30 +17,21 @@ public class Game {
 
         Player myPerson = new Player();
         myPerson.dealCards(deck);
-        myPerson.printHands();
+        //myPerson.printHands();
 
         Player myBot = new Player();
         myBot.dealCards(deck);
-        myBot.printHands();
+        //myBot.printHands();
 
         ArrayList<Card> playedStack = new ArrayList<>(52);
         playedStack.addLast(deck.draw());
 
 
-        Card exhaustCards = deck.draw();
-        int i = 1;
-        while(exhaustCards != null)
-        {
-            i++;
-            exhaustCards = deck.draw();
-        }
-        System.out.println(i + " cards left");
-        /*
-
         Card cardDrew = deck.draw();
 
         do{
-            System.out.println(checkCard(playedStack, cardDrew));
+            //System.out.println(checkCard(playedStack, cardDrew));
+            playTurn(typeIn, myPerson, playedStack);
             System.out.println(".........");
             playedStack.addLast(cardDrew);
             if(cardTier(cardDrew) == 10) playedStack.clear();
@@ -48,11 +39,17 @@ public class Game {
         } while (cardDrew != null);
 
         System.out.println(playedStack);
-        playTurn(); */
+
     }
-    public static void playTurn()
+    public static void playTurn(Scanner typeIn, Player player, ArrayList<Card> playedStack)
     {
         System.out.println("Your turn");
+        System.out.println("Your hand: " + player.printHand());
+        System.out.println();
+        System.out.println("You're playing on a: " + playedStack.getLast());
+
+        String input = typeIn.nextLine();
+
     }
 
 
@@ -69,13 +66,13 @@ public class Game {
 
     public static boolean checkCard(ArrayList<Card> Pile, Card playedCard)
     {
-        System.out.print("Drew card: " + playedCard);
-        System.out.println("    Rank: " + cardTier(playedCard));
+        // System.out.print("Drew card: " + playedCard);
+        // System.out.println("    Rank: " + cardTier(playedCard));
         if (Pile.isEmpty()) return true;
 
         Card topOfPile = Pile.removeLast();
         System.out.print("Pile card: " + topOfPile);
-        System.out.println("    Rank: " + cardTier(topOfPile));
+        // System.out.println("    Rank: " + cardTier(topOfPile));
 
         int pileTier = cardTier(topOfPile);
         int playedTier = cardTier(playedCard);
