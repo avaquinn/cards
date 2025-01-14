@@ -15,29 +15,27 @@ public class Game {
         Deck deck = new Deck();
         deck.shuffle();
 
+        Player myPerson = new Player();
+        myPerson.dealCards(deck);
+        myPerson.printHands();
+
+        Player myBot = new Player();
+        myBot.dealCards(deck);
+        myBot.printHands();
+
         ArrayList<Card> playedStack = new ArrayList<>(52);
         playedStack.addLast(deck.draw());
 
-        ArrayList<Card> playerHand = new ArrayList<>(52);
-        ArrayList<Card> playerTopCards = new ArrayList<>(3);
-        ArrayList<Card> playerHiddenCards = new ArrayList<>(3);
 
-        ArrayList<Card> computerHand = new ArrayList<>(52);
-        ArrayList<Card> computerTopCards = new ArrayList<>(3);
-        ArrayList<Card> computerHiddenCards = new ArrayList<>(3);
-        for (int i = 0;  i < 3; i++)
+        Card exhaustCards = deck.draw();
+        int i = 1;
+        while(exhaustCards != null)
         {
-            playerHand.add(deck.draw());
-            playerTopCards.add(deck.draw());
-            playerHiddenCards.add(deck.draw());
-
-            computerHand.add(deck.draw());
-            computerTopCards.add(deck.draw());
-            computerHiddenCards.add(deck.draw());
+            i++;
+            exhaustCards = deck.draw();
         }
-        System.out.println("Player hand: " + playerHand);
-        System.out.println("Computer hand: " + computerHand);
-
+        System.out.println(i + " cards left");
+        /*
 
         Card cardDrew = deck.draw();
 
@@ -50,7 +48,7 @@ public class Game {
         } while (cardDrew != null);
 
         System.out.println(playedStack);
-        playTurn();
+        playTurn(); */
     }
     public static void playTurn()
     {
