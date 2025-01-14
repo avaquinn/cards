@@ -26,7 +26,6 @@ public class Game {
         ArrayList<Card> playedStack = new ArrayList<>(52);
         playedStack.addLast(deck.draw());
 
-
         Card cardDrew = deck.draw();
 
         do{

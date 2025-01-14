@@ -14,6 +14,17 @@ public class Player {
         }
     }
 
+    public void updateHand(Card card)
+    {
+        playerHand.add(card);
+    }
+
+    public void updateHand(ArrayList<Card> pile)
+    {
+        while (pile != null) playerHand.add(pile.removeLast());
+    }
+
+
     public void printHands()
     {
         System.out.println("Player Hand: "+ playerHand);
