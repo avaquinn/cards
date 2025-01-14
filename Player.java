@@ -21,7 +21,20 @@ public class Player {
 
     public void updateHand(ArrayList<Card> pile)
     {
-        while (pile != null) playerHand.add(pile.removeLast());
+
+        //while (pile != null) playerHand.add(pile.removeLast());
+        Card myCard = new Card("foo", "Ace");
+        playerHand.add(myCard);
+    }
+
+    public Card playFromHand(int playedCardIndex)
+    {
+        if (playerHand.getLast() != null)
+        {
+            return playerHand.remove(playedCardIndex);
+        }
+        Card myCard = new Card("foo", "Ace");
+        return myCard;
     }
 
 
@@ -32,7 +45,7 @@ public class Player {
         System.out.println("Player [[HIDDEN]] Cards: "+ playerHiddenCards);
     }
 
-    public ArrayList<Card> printHand()
+    public ArrayList<Card> currentHand()
     {
         return playerHand;
     }

@@ -37,20 +37,44 @@ public class Game {
             cardDrew = deck.draw();
         } while (cardDrew != null);
 
-        System.out.println(playedStack);
+        //System.out.println(playedStack);
 
     }
-    public static void playTurn(Scanner typeIn, Player player, ArrayList<Card> playedStack)
+    public static Card playTurn(Scanner typeIn, Player player, ArrayList<Card> playedStack)
     {
         System.out.println("Your turn");
-        System.out.println("Your hand: " + player.printHand());
-        System.out.println();
-        System.out.println("You're playing on a: " + playedStack.getLast());
+        System.out.println("You're playing on a: " + "\n" + playedStack.getLast());
+        System.out.println("\nYour hand: " + player.currentHand());
+        printTurnOptions(player.currentHand());
 
+        System.out.println("\n Can play?"+ checkAllCards(playedStack, player.currentHand())+ "\n");
         String input = typeIn.nextLine();
+        System.out.println(checkAllCards(playedStack, player.currentHand()));
 
+        int playedCardIndex = Integer.parseInt(input) - 1;
+        if (!checkAllCards(playedStack, player.currentHand()))
+        {
+            System.out.println("Draw");
+            player.updateHand(playedStack);
+        }
+        else
+        {
+            playedStack.add(player.playFromHand(playedCardIndex));
+        }
+        System.out.println(playedStack);
+        //Card myCard = playedStack.removeLast(); // PLACEHOLDER
+        Card myCard = new Card("foo", "foo");
+
+        return myCard;
     }
 
+    public static void printTurnOptions(ArrayList<Card> currentHand)
+    {
+        // Prints available turn options
+        for (int i = 0; i < currentHand.size(); i++) {
+            System.out.println(i + 1 + ". " + currentHand.get(i));
+        }
+    }
 
     public static int cardTier(Card card){
         String[] ranks = {"10", "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King", "Ace"};
@@ -63,32 +87,52 @@ public class Game {
         return 0;
     }
 
-    public static boolean checkCard(ArrayList<Card> Pile, Card playedCard)
+    public static boolean checkCard(ArrayList<Card> pile, Card playedCard)
     {
-        // System.out.print("Drew card: " + playedCard);
-        // System.out.println("    Rank: " + cardTier(playedCard));
-        if (Pile.isEmpty()) return true;
+        // Can always play on an empty pile
+        if (pile.isEmpty()) return true;
 
-        Card topOfPile = Pile.removeLast();
-        System.out.print("Pile card: " + topOfPile);
-        // System.out.println("    Rank: " + cardTier(topOfPile));
+        // Views the last card from the pile
+        Card topOfPile = pile.getLast();
 
+        // Calculates the integer tier of the pile card
         int pileTier = cardTier(topOfPile);
-        int playedTier = cardTier(playedCard);
 
+        // Calculates the integer tier of the played card
+        int playedTier = cardTier(playedCard);
 
         // REFACTOR THIS AS A STACK
         if(pileTier == 3)
         {
-            // pileTier = cardTier(topOfPile);
             return true;
+            // pile.getLast();
+            // checkCard(pile, playedCard);
         }
+
         // Cards played on a 7 must be 7 or lower
         else if (pileTier == 7 && playedTier <= 7) return true;
+
+        // Any card can be played on a two
         else if (playedTier == 2) return true; //RESET CUE HERE
+
+        // Any card can be played on a ten
         else if (playedTier == 1) return true; //RESET CUE HERE
+
+        // Other cards played must be higher in value than the card they were played on
         else if (playedTier >= pileTier) return true;
 
         return false;
+    }
+
+    public static boolean checkAllCards(ArrayList<Card> pile, ArrayList<Card> hand)
+    {
+        // Iterates through all cards in hand, and confirms if you can play on the pile.
+        System.out.print("Pile card: " + pile.getLast());
+        for (int i = 0; i < hand.size(); i++)
+        {
+            if(checkCard(pile, hand.get(i))) return true;
+        }
+        return false;
+
     }
 }
