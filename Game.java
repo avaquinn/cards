@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
     public static void main(String[] args)
@@ -9,16 +10,37 @@ public class Game {
     }
     public static void initializeGame()
     {
-        System.out.println("Hiii");
+        Scanner typeIn = new Scanner(System.in);
+
         Deck deck = new Deck();
         deck.shuffle();
 
         ArrayList<Card> playedStack = new ArrayList<>(52);
         playedStack.addLast(deck.draw());
 
-        System.out.println(playedStack);
+        ArrayList<Card> playerHand = new ArrayList<>(52);
+        ArrayList<Card> playerTopCards = new ArrayList<>(3);
+        ArrayList<Card> playerHiddenCards = new ArrayList<>(3);
+
+        ArrayList<Card> computerHand = new ArrayList<>(52);
+        ArrayList<Card> computerTopCards = new ArrayList<>(3);
+        ArrayList<Card> computerHiddenCards = new ArrayList<>(3);
+        for (int i = 0;  i < 3; i++)
+        {
+            playerHand.add(deck.draw());
+            playerTopCards.add(deck.draw());
+            playerHiddenCards.add(deck.draw());
+
+            computerHand.add(deck.draw());
+            computerTopCards.add(deck.draw());
+            computerHiddenCards.add(deck.draw());
+        }
+        System.out.println("Player hand: " + playerHand);
+        System.out.println("Computer hand: " + computerHand);
+
 
         Card cardDrew = deck.draw();
+
         do{
             System.out.println(checkCard(playedStack, cardDrew));
             System.out.println(".........");
@@ -28,8 +50,13 @@ public class Game {
         } while (cardDrew != null);
 
         System.out.println(playedStack);
-
+        playTurn();
     }
+    public static void playTurn()
+    {
+        System.out.println("Your turn");
+    }
+
 
     public static int cardTier(Card card){
         String[] ranks = {"10", "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King", "Ace"};
