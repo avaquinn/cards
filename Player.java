@@ -21,7 +21,6 @@ public class Player {
 
     public void updateHand(ArrayList<Card> pile)
     {
-
         //while (pile != null) playerHand.add(pile.removeLast());
         Card myCard = new Card("foo", "Ace");
         playerHand.add(myCard);
