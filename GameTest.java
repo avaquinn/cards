@@ -1,5 +1,14 @@
+import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest {
+public class GameTest {
+    @Test
+    public void test() {
+        // Arrange
+        Game myGame = new Game();
 
+        // Act & Assert
+        assertTrue(true);
+    }
 }
