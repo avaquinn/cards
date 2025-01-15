@@ -30,9 +30,8 @@ public class RuleBook {
         // REFACTOR THIS AS A STACK
         if(pileTier == 3)
         {
-            return true;
-            // pile.getLast();
-            // checkCard(pile, playedCard);
+            pile.removeLast();
+            return checkCard(pile, playedCard);
         }
 
         // Cards played on a 7 must be 7 or lower

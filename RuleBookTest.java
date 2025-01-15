@@ -39,10 +39,34 @@ public class RuleBookTest {
     @Test
     void testThrees() {
         ArrayList<Card> threePile = new ArrayList<>();
-        threePile.add(exampleDeck.get(2));
-
         // Test threes can be played on any card
+
+        threePile.add(exampleDeck.get(2));
         for(int i = 0; i < 12; i++) assertTrue(RuleBook.checkCard(threePile, exampleDeck.get(i)));
+
+        // Test that 3s are invisible on 4 through Ace
+        threePile.add(exampleDeck.get(10));
+        for (int i = 3; i <= 11; i++)
+        {
+            threePile.add(exampleDeck.get(i));
+            threePile.add(exampleDeck.get(2));
+            if (i != 6) RuleBook.checkCard(threePile, exampleDeck.get(i + 1));
+        }
+
+        // Test that threes are invisible on sevens
+        threePile.add(exampleDeck.get(6));
+        threePile.add(exampleDeck.get(2));
+        assertTrue(RuleBook.checkCard(threePile, exampleDeck.get(4)));
+        assertFalse(RuleBook.checkCard(threePile, exampleDeck.get(8)));
+
+        // Test that multiple 3s in a row still act invisibly
+        threePile.add(exampleDeck.get(12));
+        for (int i = 0; i < 3; i++)
+        {
+            threePile.add(exampleDeck.get(2));
+        }
+        assertFalse(RuleBook.checkCard(threePile, exampleDeck.get(11)));
+        assertTrue(RuleBook.checkCard(threePile, exampleDeck.get(12)));
     }
 
     @Test
@@ -89,14 +113,4 @@ public class RuleBookTest {
         }
     }
 
-    @Test
-    void test1() {
-
-        assertEquals(13, exampleDeck.size()); // Ensure the deck has 13 cards
-    }
-
-    @Test
-    void test2() {
-        assertNotNull(exampleDeck); // Ensure the deck is not null
-    }
 }
