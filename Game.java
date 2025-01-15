@@ -33,8 +33,7 @@ public class Game {
             Player.playTurn(typeIn, myPerson, playedStack);
             System.out.println(".........");
             playedStack.addLast(cardDrew);
-            if(RuleBook.calculateCardTier(cardDrew) == 10) playedStack.clear();
-            // 10 THROWS AN ERROR RIGHT NOW
+            if(RuleBook.calculateCardTier(cardDrew) == 0) playedStack.clear();
             cardDrew = deck.draw();
         } while (cardDrew != null);
 

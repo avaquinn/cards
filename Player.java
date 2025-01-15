@@ -27,12 +27,14 @@ public class Player {
 
     public Card playFromHand(int playedCardIndex)
     {
+        // A crude insturment to ensure that played index will never be out of bounds
+        playedCardIndex = playedCardIndex % playerHand.size();
+
         if (playerHand.getLast() != null)
         {
             return playerHand.remove(playedCardIndex);
         }
-        Card myCard = new Card("foo", "Ace");
-        return myCard;
+        return null;
     }
 
     public void printHands()
@@ -42,24 +44,36 @@ public class Player {
         System.out.println("Player [[HIDDEN]] Cards: "+ playerHiddenCards);
     }
 
-    public ArrayList<Card> currentHand()
+    public ArrayList<Card> getPlayerHand()
     {
         return playerHand;
     }
 
+    public ArrayList<Card> getPlayerTopCards()
+    {
+        return playerHand;
+    }
+    public ArrayList<Card> getPlayerHiddenCards()
+    {
+        return playerHand;
+    }
+
+
     public static Card playTurn(Scanner typeIn, Player player, ArrayList<Card> playedStack)
     {
         System.out.println("Your turn");
-        System.out.println("You're playing on a: " + "\n" + playedStack.getLast());
-        System.out.println("\nYour hand: " + player.currentHand());
-        printTurnOptions(player.currentHand());
+        if (!playedStack.isEmpty())System.out.println("You're playing on a: " + "\n" + playedStack.getLast());
+        else System.out.println("You're playing on an empty stack");
 
-        System.out.println("\n Can play?"+ RuleBook.checkHand(playedStack, player.currentHand())+ "\n");
+        System.out.println("\nYour hand: " + player.getPlayerHand());
+        printTurnOptions(player.getPlayerHand());
+
+        System.out.println("\n Can play?"+ RuleBook.checkHand(playedStack, player.getPlayerHand())+ "\n");
         String input = typeIn.nextLine();
-        System.out.println(RuleBook.checkHand(playedStack, player.currentHand()));
+        System.out.println(RuleBook.checkHand(playedStack, player.getPlayerHand()));
 
         int playedCardIndex = Integer.parseInt(input) - 1;
-        if (!RuleBook.checkHand(playedStack, player.currentHand()))
+        if (!RuleBook.checkHand(playedStack, player.getPlayerHand()))
         {
             System.out.println("Draw");
             player.updateHand(playedStack);

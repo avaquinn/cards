@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlayerTest {
 
@@ -22,7 +23,7 @@ public class PlayerTest {
     }
 
     @Test
-    void testTens() {
+    void testExampleTens() {
         ArrayList<Card> tenPile = new ArrayList<>();
         tenPile.add(exampleDeck.get(0));
 
@@ -36,14 +37,49 @@ public class PlayerTest {
         for (int i = 0; i <= 12; i++)
         {
             examplePlayer.updateHand(exampleDeck.get(i));
-            assertEquals(i + 1, examplePlayer.currentHand().size());
+            assertEquals(i + 1, examplePlayer.getPlayerHand().size());
         }
 
-        examplePlayer.currentHand().clear();
+        examplePlayer.getPlayerHand().clear();
 
         // Test updating with a deck of all cards
         examplePlayer.updateHand(exampleDeck);
-        assertEquals(13, examplePlayer.currentHand().size());
+        assertEquals(13, examplePlayer.getPlayerHand().size());
+    }
+
+    @Test
+    void testDealCards() {
+        Deck drawDeck = new Deck();
+        drawDeck.shuffle();
+        examplePlayer.dealCards(drawDeck);
+
+        // Test player hand has three cards
+        assertEquals(3, examplePlayer.getPlayerHand().size());
+
+        // Test player top cards has three cards
+        assertEquals(3, examplePlayer.getPlayerTopCards().size());
+
+        // Test player hidden cards has three cards
+        assertEquals(3, examplePlayer.getPlayerHiddenCards().size());
+
+        // Test deck size has reduced by 9
+        int cardsInDeck = 0; while (drawDeck.draw() != null) cardsInDeck++;
+        assertEquals(43, cardsInDeck);
+    }
+
+    @Test
+    void testPlayFromHand() {
+        // Copies example deck into player hand
+        for (int i = 0; i < 13; i++) examplePlayer.updateHand(exampleDeck.get(i));
+
+        for (int i = 12; i >= 0; i--){
+
+            // Tests that the correct card is being pulled from the hand
+            assertEquals(exampleDeck.get(i), examplePlayer.playFromHand(i));
+
+            // Check that player hand decreases by 1 card each time
+            assertEquals(i, examplePlayer.getPlayerHand().size());
+        }
     }
 
 }
